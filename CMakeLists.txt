@@ -14,6 +14,7 @@ include(GNUInstallDirs)
 
 file(GLOB_RECURSE SOURCE_FILES
     "src/*"
+    "include/*"
 )
 message(STATUS ${SOURCE_FILES})
 
