@@ -1,10 +1,15 @@
 #include <iostream>
-#include <jce_tagsearchengine/tagSet.hpp>
+#include <jce_tagsearchengine/engine.hpp>
 
 int main(int argc, char **) {
-  jce::searchEngine::Tag<size_t> a({1, 4, 9});
-  jce::searchEngine::Tag<size_t> b({2, 4, 8});
+  jce::TagSearchEngine<size_t> engine;
+  jce::searchEngine::Tag<size_t> tag = {1, 3, 5, 7};
 
-  auto c = a.Union(b);
+  engine.addTag("hello");
+  engine.addTag("booho", tag);
+
+  auto tag1 = engine.getTag("hello");
+  auto tag2 = engine.getTag(1);
+
   return 1;
 }

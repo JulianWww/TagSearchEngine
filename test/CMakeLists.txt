@@ -5,5 +5,6 @@ include(CTest)
 enable_testing()
 
 
-add_executable(runTest main.cpp)
-target_link_libraries(runTest PUBLIC jce_tagsearchengine)
+add_executable(run main.cpp)
+target_link_libraries(run PUBLIC jce_tagsearchengine)
+set_property(TARGET run PROPERTY CXX_STANDARD 20)

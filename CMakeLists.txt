@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 project(jce_tagsearchengine VERSION 1.0.1 LANGUAGES CXX)
+set(CXX_STANDARD 20)
 
 set(DEFAULT_BUILD_TYPE "Release")
 
@@ -20,6 +21,7 @@ message(STATUS ${SOURCE_FILES})
 
 add_library(${PROJECT_NAME} ${SOURCE_FILES})
 
+set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)
 target_include_directories(${PROJECT_NAME} PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
