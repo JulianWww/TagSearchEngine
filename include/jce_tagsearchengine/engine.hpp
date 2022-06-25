@@ -15,7 +15,7 @@ namespace jce {
     private: std::unordered_map<size_t, searchEngine::Tag<T>> tagMap;
     private: std::mutex mutex;
 
-    public: searchEngine::Tag<T> search(const std::vector<size_t> tags);
+    public: searchEngine::Tag<T> search(const std::vector<size_t>& tags);
 
     public: void removeTag(const std::string& name);
     public: void removeTag(const size_t& idx);
@@ -26,6 +26,20 @@ namespace jce {
 
     private: void removeTag(const std::string& name, const size_t& idx);
   };
+}
+
+template<typename T> inline jce::searchEngine::Tag<T> jce::TagSearchEngine<T>::search(const std::vector<size_t>& tags) {
+  if (tags.size() == 0)
+    return searchEngine::Tag<T>();
+  
+  jce::searchEngine::Tag<T> tag = *(this->getTag(tags.front()));
+  for (size_t idx=1; idx < tags.size(); idx++) {
+    tag = tag.Union(*(this->getTag(tags[idx])));
+    if (tag.size() == 0) {
+      return tag;
+    }
+  }
+  return tag;
 }
 
 template<typename T> inline void jce::TagSearchEngine<T>::removeTag(const std::string& name) {
