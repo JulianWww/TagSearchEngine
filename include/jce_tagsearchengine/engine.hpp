@@ -34,7 +34,7 @@ template<typename T> inline jce::searchEngine::Tag<T> jce::TagSearchEngine<T>::s
   
   jce::searchEngine::Tag<T> tag = *(this->getTag(tags.front()));
   for (size_t idx=1; idx < tags.size(); idx++) {
-    tag = tag.Union(*(this->getTag(tags[idx])));
+    tag = tag.intersection(*(this->getTag(tags[idx])));
     if (tag.size() == 0) {
       return tag;
     }
