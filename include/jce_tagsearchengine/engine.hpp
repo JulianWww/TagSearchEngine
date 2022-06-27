@@ -3,9 +3,13 @@
 #include <jce_tagsearchengine/tagSet.hpp>
 #include <memory>
 #include <mutex>
+#include <ostream>
+#include <nlohmann/json.hpp>
 
 #define LOCK this->mutex.lock()
 #define UNLOCK this->mutex.unlock()
+
+using json = nlohmann::json;
 
 namespace jce {
   template<typename T>
@@ -24,7 +28,12 @@ namespace jce {
     public: searchEngine::Tag<T>* getTag(const size_t& idx);
     public: searchEngine::Tag<T>* getTag(const std::string& name);
 
+    public: void saveTags(std::ostream& out) const;
+    public: void loadTags(std::istream& out);
+
     private: void removeTag(const std::string& name, const size_t& idx);
+    private: json tagToJson() const;
+    private: void jsonToTag(json& data);
   };
 }
 
@@ -78,9 +87,34 @@ template<typename T> inline jce::searchEngine::Tag<T>* jce::TagSearchEngine<T>::
   return nullptr;
 }
 
+template<typename T> inline void jce::TagSearchEngine<T>::saveTags(std::ostream& out) const {
+  out << this->tagToJson().dump(2);
+}
+template<typename T> inline void jce::TagSearchEngine<T>::loadTags(std::istream& in) {
+  json data;
+  in >> data;
+  this->jsonToTag(data);
+}
+
 template<typename T> inline void jce::TagSearchEngine<T>::removeTag(const std::string& name, const size_t& idx) {
   LOCK;
   this->tagToIdx.erase(name);
   this->tagMap.erase(idx);
   UNLOCK;
+}
+template<typename T> inline json jce::TagSearchEngine<T>::tagToJson() const {
+  json out;
+  for (auto const& val: this->tagToIdx) {
+    out[std::to_string(val.second)] = val.first;
+  }
+  return out;
+}
+template<typename T> inline void jce::TagSearchEngine<T>::jsonToTag(json& data) {
+  for (auto val: data.items()) {
+    size_t      key   = std::stoi(val.key());
+    std::string name  = (std::string)val.value();
+    this->tagToIdx[name] = key;
+    if (key >= this->tagIdx)
+      this->tagIdx = key+1;
+  }
 }

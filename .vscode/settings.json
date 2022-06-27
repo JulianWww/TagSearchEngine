@@ -53,6 +53,12 @@
     "condition_variable": "cpp",
     "ratio": "cpp",
     "mutex": "cpp",
-    "thread": "cpp"
+    "thread": "cpp",
+    "any": "cpp",
+    "codecvt": "cpp",
+    "forward_list": "cpp",
+    "map": "cpp",
+    "iomanip": "cpp",
+    "valarray": "cpp"
   }
 }
