@@ -28,6 +28,8 @@ template<typename T> inline constexpr jce::searchEngine::Tag<T>::Tag(std::initia
 
 
 template<typename T> inline jce::searchEngine::Tag<T> jce::searchEngine::Tag<T>::intersection(const Tag<T>& other) const {
+  if (other.size() == 0) { return *this; }
+  if (this->size() == 0) { return other; }
   auto aFront = this->cbegin();
   auto bFront = other.cbegin();
   Tag<T> out;
@@ -45,6 +47,8 @@ template<typename T> inline jce::searchEngine::Tag<T> jce::searchEngine::Tag<T>:
   return out;
 }
 template<typename T> inline jce::searchEngine::Tag<T> jce::searchEngine::Tag<T>::Union(const Tag<T>& other) const {
+  if (other.size() == 0) { return *this; }
+  if (this->size() == 0) { return other; }
   auto aFront = this->cbegin();
   auto bFront = other.cbegin();
   Tag<T> out({*aFront});

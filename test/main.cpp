@@ -3,20 +3,14 @@
 #include <fstream>
 
 int main(int argc, char **) {
-  jce::TagSearchEngine<size_t> engine;
-  jce::searchEngine::Tag<size_t> _tag1 = {1, 3, 5, 7};
-  jce::searchEngine::Tag<size_t> _tag2 = {0, 3, 6, 8};
-  
-  engine.addTag("hello", _tag1);
-  engine.addTag("booho", _tag2);
-  
-  std::ofstream out("test.json");
-  engine.saveTags(out);
-  out.close();
+  jce::StrEngineData<size_t> engine;
 
-  std::ifstream in("test.json");
-  engine.loadTags(in);
-  in.close();
+  engine.insert(std::string("hello"), 128);
+  engine.insert(std::string("world"), 128);
+
+  engine.remove(std::string("hello"), 128);
+
+  auto val = engine.search(2);
 
   return 1;
 }

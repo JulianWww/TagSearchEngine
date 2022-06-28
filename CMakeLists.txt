@@ -18,7 +18,6 @@ file(GLOB_RECURSE SOURCE_FILES
     #"src/*"
     "include/*"
 )
-message(STATUS ${SOURCE_FILES})
 
 add_library(${PROJECT_NAME} INTERFACE ${SOURCE_FILES})
 
