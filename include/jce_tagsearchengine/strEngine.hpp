@@ -7,10 +7,10 @@
 #define UNLOCK this->mutex.unlock()
 
 namespace jce {
-    template <typename T, typename Hash>
-    class StrSearchEngine {
-        using MemoryType        = jce::StrEngineData<T>;
-
-        private: MemoryType memory;
+    template <typename T>
+    class StrSearchEngine: public jce::StrEngineData<T> {
     };
 }
+
+#undef LOCK
+#undef UNLOCK
